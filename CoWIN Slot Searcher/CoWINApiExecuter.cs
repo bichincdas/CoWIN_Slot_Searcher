@@ -17,7 +17,9 @@ namespace CoWIN_Slot_Searcher
         /// <summary>
         /// API path for getting slot details
         /// </summary>
-        const string apiPathForSlotDetails = "api/v2/appointment/sessions/public/calendarByDistrict?district_id={0}&date={1}";
+        //const string apiPathForSlotDetails = "api/v2/appointment/sessions/public/calendarByDistrict?district_id={0}&date={1}";
+        const string apiPathForSlotDetails = "api/v2/appointment/sessions/calendarByDistrict?district_id={0}&date={1}";
+
 
         /// <summary>
         /// API path for getting state details
@@ -31,6 +33,28 @@ namespace CoWIN_Slot_Searcher
         const string apiPathForDistrictDetails = "api/v2/admin/location/districts/{0}";
 
         /// <summary>
+        /// HttpClient object
+        /// </summary>
+        static HttpClient httpClient = null;
+
+        /// <summary>
+        /// Gets HTTP Client object
+        /// </summary>
+        /// <returns></returns>
+        public static HttpClient GetHttpCLient()
+        {
+            if (httpClient == null)
+            {
+                httpClient = new HttpClient();
+                httpClient.BaseAddress = new Uri(cowinUri);
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            }
+
+            return httpClient;
+        }
+
+        /// <summary>
         /// Gets the slot details of a city
         /// </summary>
         /// <param name="distId">Id of specific distric</param>
@@ -39,28 +63,29 @@ namespace CoWIN_Slot_Searcher
         public static SlotDetails GetSlotDetails(string distId, string date)
         {
             SlotDetails slotDetails = null;
-
             if (!string.IsNullOrEmpty(distId) && !string.IsNullOrEmpty(date))
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(cowinUri);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //Prepare the path
-                string apiPath = string.Format(apiPathForSlotDetails, distId, date);
-
-                //Get the response
-                HttpResponseMessage response = client.GetAsync(apiPath).Result;
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    var serializer = new JavaScriptSerializer();
-                    slotDetails = serializer.Deserialize<SlotDetails>(jsonResult);
+                    //Prepare the path
+                    string apiPath = string.Format(apiPathForSlotDetails, distId, date);
+
+                    //Get the response
+                    HttpResponseMessage response = GetHttpCLient().GetAsync(apiPath).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonResult = response.Content.ReadAsStringAsync().Result;
+                        var serializer = new JavaScriptSerializer();
+                        slotDetails = serializer.Deserialize<SlotDetails>(jsonResult);
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    throw new Exception(response.ReasonPhrase);
+
                 }
             }
             return slotDetails;
@@ -69,23 +94,24 @@ namespace CoWIN_Slot_Searcher
         public static StateDetails GetStateDetails()
         {
             StateDetails stateDetails = null;
-
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(cowinUri);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            //Get the response
-            HttpResponseMessage response = client.GetAsync(apiPathForStateDetails).Result;
-            if (response.IsSuccessStatusCode)
+            try
             {
-                string jsonResult = response.Content.ReadAsStringAsync().Result;
-                var serializer = new JavaScriptSerializer();
-                stateDetails = serializer.Deserialize<StateDetails>(jsonResult);
+                //Get the response
+                HttpResponseMessage response = GetHttpCLient().GetAsync(apiPathForStateDetails).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonResult = response.Content.ReadAsStringAsync().Result;
+                    var serializer = new JavaScriptSerializer();
+                    stateDetails = serializer.Deserialize<StateDetails>(jsonResult);
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception(response.ReasonPhrase);
+
             }
             return stateDetails;
         }
@@ -96,25 +122,27 @@ namespace CoWIN_Slot_Searcher
 
             if (!string.IsNullOrEmpty(stateID))
             {
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri(cowinUri);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                //Prepare the path
-                string apiPath = string.Format(apiPathForDistrictDetails, stateID);
-
-                //Get the response
-                HttpResponseMessage response = client.GetAsync(apiPath).Result;
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    string jsonResult = response.Content.ReadAsStringAsync().Result;
-                    var serializer = new JavaScriptSerializer();
-                    districtDetails = serializer.Deserialize<DistrictDetails>(jsonResult);
+                    //Prepare the path
+                    string apiPath = string.Format(apiPathForDistrictDetails, stateID);
+
+                    //Get the response
+                    HttpResponseMessage response = GetHttpCLient().GetAsync(apiPath).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonResult = response.Content.ReadAsStringAsync().Result;
+                        var serializer = new JavaScriptSerializer();
+                        districtDetails = serializer.Deserialize<DistrictDetails>(jsonResult);
+                    }
+                    else
+                    {
+                        throw new Exception(response.ReasonPhrase);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    throw new Exception(response.ReasonPhrase);
+
                 }
             }
             return districtDetails;

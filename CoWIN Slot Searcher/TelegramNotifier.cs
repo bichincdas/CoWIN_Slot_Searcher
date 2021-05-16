@@ -31,9 +31,18 @@ namespace CoWIN_Slot_Searcher
         /// <param name="message"></param>
         public static void SendTelegramMessage(string message)
         {
-            string url = String.Format(urlString, apiToken, chatId, message);
-            WebRequest request = WebRequest.Create(url);
-            Stream rs = request.GetResponse().GetResponseStream();
+            try
+            {
+                string url = String.Format(urlString, apiToken, chatId, message);
+                WebRequest request = WebRequest.Create(url);
+                request.Timeout = 1000 * 5;
+                WebResponse response = request.GetResponse();
+                response.Close();
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }

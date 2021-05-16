@@ -172,8 +172,12 @@ namespace CoWIN_Slot_Searcher
                         {
                             try
                             {
-                                dataGridView1.Rows[index].Cells[session.date].Value = session.available_capacity.ToString() + "\n" + session.vaccine;
+                                dataGridView1.Rows[index].Cells[session.date].Value = session.vaccine + "\nTotal: "+ session .available_capacity + "\n Dose-1: " + session.available_capacity_dose1 + "\n Dose-2: " + session.available_capacity_dose2;
                                 totalAvailableCapacity += (int)session.available_capacity;
+                                if ((int)session.available_capacity > 0)
+                                {
+                                    dataGridView1.Rows[index].Cells[session.date].Style.BackColor = Color.LightGreen; ;
+                                }
                             }
                             catch(Exception ex)
                             {
