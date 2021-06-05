@@ -17,8 +17,8 @@ namespace CoWIN_Slot_Searcher
         /// <summary>
         /// API path for getting slot details
         /// </summary>
-        //const string apiPathForSlotDetails = "api/v2/appointment/sessions/public/calendarByDistrict?district_id={0}&date={1}";
-        const string apiPathForSlotDetails = "api/v2/appointment/sessions/calendarByDistrict?district_id={0}&date={1}";
+        const string apiPathForSlotDetails = "api/v2/appointment/sessions/public/calendarByDistrict?district_id={0}&date={1}";
+        //const string apiPathForSlotDetails = "api/v2/appointment/sessions/calendarByDistrict?district_id={0}&date={1}";
 
 
         /// <summary>
