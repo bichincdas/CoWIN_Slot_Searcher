@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
@@ -66,6 +67,11 @@ namespace CoWIN_Slot_Searcher
         /// Sync object
         /// </summary>
         object lockObject = new object();
+
+        /// <summary>
+        /// Represents the active beep;
+        /// </summary>
+        bool beepActive = false;
 
         public Form1()
         {
@@ -138,6 +144,9 @@ namespace CoWIN_Slot_Searcher
         /// <param name="slotDetails"></param>
         private void OnUpdateAndNotifyResult(SlotDetails slotDetails)
         {
+            //Sort details;
+            slotDetails.centers = ValidateFeeType(slotDetails.centers);
+
             populateDetailsToDataGrid(slotDetails);
 
             ValidateAndNotifyResult(slotDetails);
@@ -166,17 +175,17 @@ namespace CoWIN_Slot_Searcher
                     int totalAvailableCapacity = 0;
                     foreach (Center center in slotDetails.centers)
                     {
-
                         dataGridView1.Rows.Add(center.name, center.address, center.pincode);
-                        foreach(Session session in center.sessions)
+                        center.sessions = ApplyFilter(center.sessions);
+                        foreach (Session session in center.sessions)
                         {
                             try
                             {
-                                dataGridView1.Rows[index].Cells[session.date].Value = session.vaccine + "\nTotal: "+ session .available_capacity + "\n Dose-1: " + session.available_capacity_dose1 + "\n Dose-2: " + session.available_capacity_dose2;
+                                dataGridView1.Rows[index].Cells[session.date].Value = "Age: " + session.min_age_limit +"\n"+ session.vaccine + "\nTotal: "+ session .available_capacity + "\n D1: " + session.available_capacity_dose1 + "\n D2: " + session.available_capacity_dose2;
                                 totalAvailableCapacity += (int)session.available_capacity;
                                 if ((int)session.available_capacity > 0)
                                 {
-                                    dataGridView1.Rows[index].Cells[session.date].Style.BackColor = Color.LightGreen; ;
+                                    dataGridView1.Rows[index].Cells[session.date].Style.BackColor = Color.LightGreen;
                                 }
                             }
                             catch(Exception ex)
@@ -187,12 +196,14 @@ namespace CoWIN_Slot_Searcher
                         }
                         index++;
                     }
-
                     //Update search details
                     string searchDetals = "";
                     if (slotDetails.centers.Count > 0)
                     {
                         searchDetals = "District: " + slotDetails.centers[0].district_name;
+
+                        //Sort datagrid view
+                        dataGridView1.Sort(dataGridView1.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
                     }
                     else
                     {
@@ -203,6 +214,143 @@ namespace CoWIN_Slot_Searcher
                 }
 
             }
+        }
+
+        /// <summary>
+        /// Apply the filter conditions
+        /// </summary>
+        /// <param name="sessionList"></param>
+        /// <returns></returns>
+        private List<Session> ApplyFilter(List<Session> sessionList)
+        {
+            return ValidateDoseConditions(ValidateVaccineConditions(ValidateAgeConditions(sessionList))); ;
+        }
+
+
+
+        /// <summary>
+        /// VAlidates the age conditions
+        /// </summary>
+        /// <param name="sessionList"></param>
+        /// <returns></returns>
+        private List<Session> ValidateAgeConditions(List<Session> sessionList)
+        {
+
+            //If all the check boxes are unchecked
+            if ((eighteenChkBox.Checked && fourtyChkBox.Checked && fourtyFiveChkBox.Checked) ||
+                (!eighteenChkBox.Checked && !fourtyChkBox.Checked && !fourtyFiveChkBox.Checked))
+            {
+                return sessionList;
+            }
+
+            List<Session> sessions = sessionList;
+            List<Session> filteredList = new List<Session>();
+
+            if (eighteenChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.min_age_limit == 18).ToList());
+            }
+
+            if (fourtyChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.min_age_limit == 40).ToList());
+            }
+
+            if (fourtyFiveChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.min_age_limit == 45).ToList());
+            }
+
+            return filteredList;
+        }
+
+
+        /// <summary>
+        /// Validates the vaccine conditions
+        /// </summary>
+        /// <param name="sessionList"></param>
+        /// <returns></returns>
+        private List<Session> ValidateVaccineConditions(List<Session> sessionList)
+        {
+            //If all the check boxes are unchecked
+            if ((covoshieldChkBox.Checked && covaxinChkBox.Checked && sputnicChkBox.Checked) ||
+                (!covoshieldChkBox.Checked && !covaxinChkBox.Checked && !sputnicChkBox.Checked))
+            {
+                return sessionList;
+            }
+
+            List<Session> sessions = sessionList;
+            List<Session> filteredList = new List<Session>();
+
+            if (covoshieldChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.vaccine == "COVISHIELD").ToList());
+            }
+
+            if (covaxinChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.vaccine == "COVAXIN").ToList());
+            }
+
+            if (sputnicChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.vaccine == "SPUTNIC V").ToList());
+            }
+
+            return filteredList;
+        }
+
+        /// <summary>
+        /// Validated dose type
+        /// </summary>
+        /// <param name="sessionList"></param>
+        /// <returns></returns>
+        private List<Session> ValidateDoseConditions(List<Session> sessionList)
+        {
+            //If all the check boxes are unchecked
+            if ((!dose1ChkBox.Checked && !dose2ChkBox.Checked ))
+            {
+                return sessionList;
+            }
+
+            List<Session> sessions = sessionList;
+            List<Session> filteredList = new List<Session>();
+
+            if (dose1ChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.available_capacity_dose1 > 0).ToList());
+            }
+
+            if (dose2ChkBox.Checked)
+            {
+                filteredList.AddRange(sessions.Where(item => item.available_capacity_dose2 > 0).ToList());
+            }
+
+            return filteredList;
+        }
+
+        /// <summary>
+        /// Validates fee type
+        /// </summary>
+        /// <param name="center"></param>
+        /// <returns></returns>
+        private List<Center> ValidateFeeType(List<Center> centerList)
+        {
+            if((!freeChkBox.Checked && !paidChkBox.Checked) || (freeChkBox.Checked && paidChkBox.Checked))
+            {
+                return centerList;
+            }
+
+            if (freeChkBox.Checked)
+            {
+                return centerList.Where(item => item.fee_type == "Free").ToList();
+            }
+
+            if(paidChkBox.Checked)
+            {
+                return centerList.Where(item => item.fee_type == "Paid").ToList();
+            }
+            return null;
         }
 
         /// <summary>
@@ -402,9 +550,10 @@ namespace CoWIN_Slot_Searcher
                     //If 0 , do not validate pin code
                     if (searchPIN > 0 && Convert.ToInt32(center.pincode) != searchPIN)
                     {
-                        break;
+                        continue;
                     }
 
+                    center.sessions = ApplyFilter(center.sessions);
                     foreach (Session session in center.sessions)
                     {
                         //Validate min number of available slots to notify
@@ -439,9 +588,11 @@ namespace CoWIN_Slot_Searcher
                         TelegramNotifier.SendTelegramMessage(message);
                     }
 
-                    if (checkBoxNotifyAlarm.Checked)
+                    if (checkBoxNotifyAlarm.Checked && !beepActive)
                     {
+                        beepActive = true;
                         Console.Beep(1000, 5000);
+                        beepActive = false;
                     }
                 }
                 catch (Exception ex)

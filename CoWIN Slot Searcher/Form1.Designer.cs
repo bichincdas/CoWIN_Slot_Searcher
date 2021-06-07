@@ -64,12 +64,30 @@ namespace CoWIN_Slot_Searcher
             this.textBoxAvailableSlotLimit = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.paidChkBox = new System.Windows.Forms.CheckBox();
+            this.freeChkBox = new System.Windows.Forms.CheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.fourtyChkBox = new System.Windows.Forms.CheckBox();
+            this.fourtyFiveChkBox = new System.Windows.Forms.CheckBox();
+            this.eighteenChkBox = new System.Windows.Forms.CheckBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.sputnicChkBox = new System.Windows.Forms.CheckBox();
+            this.covaxinChkBox = new System.Windows.Forms.CheckBox();
+            this.covoshieldChkBox = new System.Windows.Forms.CheckBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.dose2ChkBox = new System.Windows.Forms.CheckBox();
+            this.dose1ChkBox = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBoxPhoneNumber.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -182,9 +200,9 @@ namespace CoWIN_Slot_Searcher
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dataGridView1);
-            this.groupBox2.Location = new System.Drawing.Point(12, 233);
+            this.groupBox2.Location = new System.Drawing.Point(12, 285);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(776, 286);
+            this.groupBox2.Size = new System.Drawing.Size(776, 372);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Slot Details";
@@ -204,7 +222,7 @@ namespace CoWIN_Slot_Searcher
             this.dataGridView1.Location = new System.Drawing.Point(9, 19);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(761, 261);
+            this.dataGridView1.Size = new System.Drawing.Size(761, 347);
             this.dataGridView1.TabIndex = 0;
             // 
             // Center
@@ -261,7 +279,7 @@ namespace CoWIN_Slot_Searcher
             this.groupBox3.Controls.Add(this.labelCurrrentTime);
             this.groupBox3.Controls.Add(this.labelLastUpdatedTime);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Location = new System.Drawing.Point(13, 187);
+            this.groupBox3.Location = new System.Drawing.Point(13, 239);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(775, 40);
             this.groupBox3.TabIndex = 2;
@@ -390,12 +408,172 @@ namespace CoWIN_Slot_Searcher
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.paidChkBox);
+            this.groupBox4.Controls.Add(this.freeChkBox);
+            this.groupBox4.Location = new System.Drawing.Point(13, 189);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(128, 49);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Fee Type";
+            // 
+            // paidChkBox
+            // 
+            this.paidChkBox.AutoSize = true;
+            this.paidChkBox.Location = new System.Drawing.Point(74, 19);
+            this.paidChkBox.Name = "paidChkBox";
+            this.paidChkBox.Size = new System.Drawing.Size(47, 17);
+            this.paidChkBox.TabIndex = 6;
+            this.paidChkBox.Text = "Paid";
+            this.paidChkBox.UseVisualStyleBackColor = true;
+            this.paidChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // freeChkBox
+            // 
+            this.freeChkBox.AutoSize = true;
+            this.freeChkBox.Location = new System.Drawing.Point(11, 19);
+            this.freeChkBox.Name = "freeChkBox";
+            this.freeChkBox.Size = new System.Drawing.Size(47, 17);
+            this.freeChkBox.TabIndex = 5;
+            this.freeChkBox.Text = "Free";
+            this.freeChkBox.UseVisualStyleBackColor = true;
+            this.freeChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.fourtyChkBox);
+            this.groupBox5.Controls.Add(this.fourtyFiveChkBox);
+            this.groupBox5.Controls.Add(this.eighteenChkBox);
+            this.groupBox5.Location = new System.Drawing.Point(151, 189);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(181, 49);
+            this.groupBox5.TabIndex = 7;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Age Limit";
+            // 
+            // fourtyChkBox
+            // 
+            this.fourtyChkBox.AutoSize = true;
+            this.fourtyChkBox.Location = new System.Drawing.Point(71, 19);
+            this.fourtyChkBox.Name = "fourtyChkBox";
+            this.fourtyChkBox.Size = new System.Drawing.Size(44, 17);
+            this.fourtyChkBox.TabIndex = 7;
+            this.fourtyChkBox.Text = "40+";
+            this.fourtyChkBox.UseVisualStyleBackColor = true;
+            this.fourtyChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // fourtyFiveChkBox
+            // 
+            this.fourtyFiveChkBox.AutoSize = true;
+            this.fourtyFiveChkBox.Location = new System.Drawing.Point(130, 19);
+            this.fourtyFiveChkBox.Name = "fourtyFiveChkBox";
+            this.fourtyFiveChkBox.Size = new System.Drawing.Size(44, 17);
+            this.fourtyFiveChkBox.TabIndex = 6;
+            this.fourtyFiveChkBox.Text = "45+";
+            this.fourtyFiveChkBox.UseVisualStyleBackColor = true;
+            this.fourtyFiveChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // eighteenChkBox
+            // 
+            this.eighteenChkBox.AutoSize = true;
+            this.eighteenChkBox.Location = new System.Drawing.Point(15, 19);
+            this.eighteenChkBox.Name = "eighteenChkBox";
+            this.eighteenChkBox.Size = new System.Drawing.Size(44, 17);
+            this.eighteenChkBox.TabIndex = 5;
+            this.eighteenChkBox.Text = "18+";
+            this.eighteenChkBox.UseVisualStyleBackColor = true;
+            this.eighteenChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.sputnicChkBox);
+            this.groupBox6.Controls.Add(this.covaxinChkBox);
+            this.groupBox6.Controls.Add(this.covoshieldChkBox);
+            this.groupBox6.Location = new System.Drawing.Point(340, 189);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(283, 49);
+            this.groupBox6.TabIndex = 8;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Vaccine";
+            // 
+            // sputnicChkBox
+            // 
+            this.sputnicChkBox.AutoSize = true;
+            this.sputnicChkBox.Location = new System.Drawing.Point(197, 19);
+            this.sputnicChkBox.Name = "sputnicChkBox";
+            this.sputnicChkBox.Size = new System.Drawing.Size(83, 17);
+            this.sputnicChkBox.TabIndex = 7;
+            this.sputnicChkBox.Text = "SPUTNIC V";
+            this.sputnicChkBox.UseVisualStyleBackColor = true;
+            this.sputnicChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // covaxinChkBox
+            // 
+            this.covaxinChkBox.AutoSize = true;
+            this.covaxinChkBox.Location = new System.Drawing.Point(111, 19);
+            this.covaxinChkBox.Name = "covaxinChkBox";
+            this.covaxinChkBox.Size = new System.Drawing.Size(73, 17);
+            this.covaxinChkBox.TabIndex = 6;
+            this.covaxinChkBox.Text = "COVAXIN";
+            this.covaxinChkBox.UseVisualStyleBackColor = true;
+            this.covaxinChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // covoshieldChkBox
+            // 
+            this.covoshieldChkBox.AutoSize = true;
+            this.covoshieldChkBox.Location = new System.Drawing.Point(14, 19);
+            this.covoshieldChkBox.Name = "covoshieldChkBox";
+            this.covoshieldChkBox.Size = new System.Drawing.Size(90, 17);
+            this.covoshieldChkBox.TabIndex = 5;
+            this.covoshieldChkBox.Text = "COVISHIELD";
+            this.covoshieldChkBox.UseVisualStyleBackColor = true;
+            this.covoshieldChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.dose2ChkBox);
+            this.groupBox7.Controls.Add(this.dose1ChkBox);
+            this.groupBox7.Location = new System.Drawing.Point(631, 189);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(156, 49);
+            this.groupBox7.TabIndex = 7;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Dose";
+            // 
+            // dose2ChkBox
+            // 
+            this.dose2ChkBox.AutoSize = true;
+            this.dose2ChkBox.Location = new System.Drawing.Point(89, 19);
+            this.dose2ChkBox.Name = "dose2ChkBox";
+            this.dose2ChkBox.Size = new System.Drawing.Size(40, 17);
+            this.dose2ChkBox.TabIndex = 6;
+            this.dose2ChkBox.Text = "D2";
+            this.dose2ChkBox.UseVisualStyleBackColor = true;
+            this.dose2ChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
+            // dose1ChkBox
+            // 
+            this.dose1ChkBox.AutoSize = true;
+            this.dose1ChkBox.Location = new System.Drawing.Point(19, 19);
+            this.dose1ChkBox.Name = "dose1ChkBox";
+            this.dose1ChkBox.Size = new System.Drawing.Size(40, 17);
+            this.dose1ChkBox.TabIndex = 5;
+            this.dose1ChkBox.Text = "D1";
+            this.dose1ChkBox.UseVisualStyleBackColor = true;
+            this.dose1ChkBox.CheckedChanged += new System.EventHandler(this.OnSearchPropertiesChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(800, 531);
+            this.ClientSize = new System.Drawing.Size(800, 662);
+            this.Controls.Add(this.groupBox7);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBoxPhoneNumber);
             this.Controls.Add(this.groupBox3);
@@ -417,6 +595,14 @@ namespace CoWIN_Slot_Searcher
             this.groupBoxPhoneNumber.ResumeLayout(false);
             this.groupBoxPhoneNumber.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -456,6 +642,20 @@ namespace CoWIN_Slot_Searcher
         private System.Windows.Forms.ComboBox comboBoxStates;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.CheckBox paidChkBox;
+        private System.Windows.Forms.CheckBox freeChkBox;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox fourtyFiveChkBox;
+        private System.Windows.Forms.CheckBox eighteenChkBox;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.CheckBox sputnicChkBox;
+        private System.Windows.Forms.CheckBox covaxinChkBox;
+        private System.Windows.Forms.CheckBox covoshieldChkBox;
+        private System.Windows.Forms.CheckBox fourtyChkBox;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.CheckBox dose2ChkBox;
+        private System.Windows.Forms.CheckBox dose1ChkBox;
     }
 }
 
